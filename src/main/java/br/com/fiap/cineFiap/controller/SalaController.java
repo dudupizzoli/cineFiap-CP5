@@ -73,10 +73,15 @@ public class SalaController {
         }
     }
 
-//    public void deletar(@PathVariable Long id){
-//
-//            dao.deletar(id);
-//
-//
-//    }
+    @PutMapping("/excluir/{id}")
+    public ResponseEntity<String> deletar(@PathVariable Long id){
+        try{
+            salaService.excluir(id);
+            return ResponseEntity.ok().body("A sala foi atualizada com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return  ResponseEntity.badRequest().body("Ocorreu um erro: " + e);
+        }
+
+
+    }
 }

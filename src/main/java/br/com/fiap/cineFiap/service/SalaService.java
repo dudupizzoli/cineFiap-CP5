@@ -70,5 +70,18 @@ public class SalaService {
         }
     }
 
+    public void excluir(Long id){
+        if(id == null){
+            throw new IllegalArgumentException("Nenhum ID foi fornecido.");
+        }
+        Sala salaBuscada = salaDAO.buscarPorId(id);
+        if (salaBuscada.getDataExclusao() != null){
+            throw new IllegalArgumentException("A data de exclusão precisa ser nula.");
+        }
+        else{
+            salaDAO.deletar(id);
+        }
+    }
+
 
 }
