@@ -19,19 +19,29 @@ public class SalaController {
         this.salaService = new SalaService();
     }
 
+    @PostMapping
+    public ResponseEntity<String> cadastrar(@RequestBody Sala sala){
+        try{
+            salaService.cadastrar(sala);
+            return ResponseEntity.status(HttpStatus.CREATED).body("A sala foi criada com sucesso!");
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("Não foi possível realizar o cadastro pois uma ou mais informações eram inválidas");
+        }
+    }
 
-//    public void cadastrar( Sala sala){
-//
-//            dao.cadastrar(sala);
-//
-//    }
-//
     @GetMapping("/{id}")
     public ResponseEntity<Sala> buscarPorId(@PathVariable Long id){
         try{
-            Sala salaBuscada = salaService.buscarPorId(id);
-            return ResponseEntity.ok(salaBuscada);
 
+
+            Sala salaBuscada = salaService.buscarPorId(id);
+
+            if (salaBuscada == null || salaBuscada.getId() == null) {
+                return ResponseEntity.notFound().build();
+            }
+            else{
+                return ResponseEntity.ok(salaBuscada);
+            }
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
