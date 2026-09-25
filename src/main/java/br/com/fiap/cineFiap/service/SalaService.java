@@ -21,6 +21,18 @@ public class SalaService {
 
     }
 
+    public Sala buscarPorId(Long id){
+        if(id == null){
+            throw new IllegalArgumentException("Nenhum ID foi fornecido.");
+        }
+        Sala salaBuscada = salaDAO.buscarPorId(id);
+        if(salaBuscada == null) {
+            throw new IllegalArgumentException("Sala não encontrada para o ID fornecido.");
+        } else{
+            return salaBuscada;
+        }
+    }
+
 
 
 }

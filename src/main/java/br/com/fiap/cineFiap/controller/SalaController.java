@@ -26,16 +26,22 @@ public class SalaController {
 //
 //    }
 //
-//
-//    public Sala buscarPorId( Long id){
-//        return  dao.buscarPorId(id);
-//
-//
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Sala> buscarPorId(@PathVariable Long id){
+        try{
+            Sala salaBuscada = salaService.buscarPorId(id);
+            return ResponseEntity.ok(salaBuscada);
+
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping
     public ResponseEntity<List<Sala>> salasEmCartaz(){
         try{
+
             return ResponseEntity.ok(salaService.listar());
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
