@@ -25,15 +25,13 @@ public class SalaController {
             salaService.cadastrar(sala);
             return ResponseEntity.status(HttpStatus.CREATED).body("A sala foi criada com sucesso!");
         }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("Não foi possível realizar o cadastro pois uma ou mais informações eram inválidas");
+            return ResponseEntity.badRequest().body("Não foi possível realizar o cadastro pois uma ou mais informações eram inválidas: " + e);
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Sala> buscarPorId(@PathVariable Long id){
         try{
-
-
             Sala salaBuscada = salaService.buscarPorId(id);
 
             if (salaBuscada == null || salaBuscada.getId() == null) {
@@ -64,13 +62,17 @@ public class SalaController {
 //            dao.excluir(id);
 //
 //    }
-//
-//    public void alterar( Long id, Sala objeto){
-//
-//            dao.alterar(objeto);
-//    }
-//
-//
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> alterar(@PathVariable Long id, @RequestBody Sala sala){
+        try{
+            salaService.alterar(sala, id);
+            return ResponseEntity.ok().body("A sala foi atualizada com sucesso!");
+        }catch(IllegalArgumentException e){
+            return  ResponseEntity.badRequest().body("Ocorreu um erro: " + e);
+        }
+    }
+
 //    public void deletar(@PathVariable Long id){
 //
 //            dao.deletar(id);

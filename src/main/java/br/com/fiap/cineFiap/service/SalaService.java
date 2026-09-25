@@ -48,6 +48,27 @@ public class SalaService {
         }
     }
 
+    public void alterar(Sala sala, Long id){
+        Sala salaBuscada = salaDAO.buscarPorId(id);
+        if(id == null){
+            throw new IllegalArgumentException("Nenhum ID foi fornecido.");
+        }
+        if(salaBuscada.getId() == null) {
+            throw new IllegalArgumentException("Sala não encontrada para o ID fornecido.");
+        }
+        if(sala.getNome() == null || sala.getNome().isEmpty()){
+            throw new IllegalArgumentException("O nome da sala é obrigatório.");
+        }
+        if(sala.getPreco() <= 0){
+            throw new IllegalArgumentException("O preço não pode ser menor ou igual a 0.");
+        }
+        if(sala.getDataExclusao() != null){
+            throw new IllegalArgumentException("A data de exclusão precisa ser nula.");
+        }
+        else{
+            salaDAO.alterar(sala);
+        }
+    }
 
 
 }
